@@ -141,6 +141,9 @@ export class Calendar extends Component {
             if (hoveredDay.isSameOrAfter(selectedDay[0]) && day.isBetween(selectedDay[0], hoveredDay, null, '(]')) {
                 hover = true;
             }
+        }
+            if (selectedDay.length === 1 && !this.state.firstCal && !this.state.secondHover) {
+                    hover = false;
         } else if (selectedDay.length === 2) {
             if (selectedDay[1].isSameOrAfter(selectedDay[0]) && day.isBetween(selectedDay[0], selectedDay[1], null, '()')) {
                 hover = true;

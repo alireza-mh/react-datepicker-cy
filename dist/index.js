@@ -7539,10 +7539,16 @@ var Calendar = function (_Component) {
         key: 'hover',
         value: function hover(selectedDay, hoveredDay, day, selected) {
             var hover = false;
+            if (!this.state.firstCal) {
+                console.log("hover day", !!hoveredDay);
+            }
             if (selectedDay.length === 1 && !!hoveredDay) {
                 if (hoveredDay.isSameOrAfter(selectedDay[0]) && day.isBetween(selectedDay[0], hoveredDay, null, '(]')) {
                     hover = true;
                 }
+            }
+            if (selectedDay.length === 1 && !this.state.firstCal && !this.state.secondHover) {
+                hover = false;
             } else if (selectedDay.length === 2) {
                 if (selectedDay[1].isSameOrAfter(selectedDay[0]) && day.isBetween(selectedDay[0], selectedDay[1], null, '()')) {
                     hover = true;
