@@ -30,7 +30,7 @@ export default class DatePicker extends Component {
     datePickerClass: PropTypes.string,
     datePickerClass: PropTypes.string,
     tetherAttachment:PropTypes.string,
-    inputReadOnly:PropTypes.boolean,
+    inputReadOnly:PropTypes.bool,
   };
 
   static defaultProps = {
