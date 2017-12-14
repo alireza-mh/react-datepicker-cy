@@ -7543,6 +7543,12 @@ var Calendar = function (_Component) {
                 if (hoveredDay.isSameOrAfter(selectedDay[0]) && day.isBetween(selectedDay[0], hoveredDay, null, '(]')) {
                     hover = true;
                 }
+            }
+            if (selectedDay.length === 1 && hoveredDay === null) {
+                hover = false;
+            }
+            if (selectedDay.length === 1 && !this.state.firstCal && !this.state.secondHover) {
+                hover = false;
             } else if (selectedDay.length === 2) {
                 if (selectedDay[1].isSameOrAfter(selectedDay[0]) && day.isBetween(selectedDay[0], selectedDay[1], null, '()')) {
                     hover = true;
@@ -7591,13 +7597,11 @@ var Calendar = function (_Component) {
                     if (selectedDayArray.length === 2) {
                         if (givenDay.isAfter(selectedDayArray[0])) {
                             var temp = this.state.selectedDayArray;
-                            console.log("select day array", selectedDayArray);
                             temp[1] = givenDay;
                             this.setState({ selectedDayArray: temp });
                             syncSelectedDay({ selectedDayArray: temp });
                             return;
                         } else {
-                            console.log("here");
                             this.setState({ selectedDayArray: [givenDay] });
                             syncSelectedDay({ selectedDayArray: [givenDay] });
                             return;
@@ -7618,11 +7622,9 @@ var Calendar = function (_Component) {
                     var monthFormat = _isGregorian2 ? 'Month' : 'jMonth';
                     if (this.props.onPrevMonth && givenDay.format(_yearMonthFormat) < _month.format(_yearMonthFormat)) {
                         this.props.onPrevMonth(this.state.month.clone().subtract(1, monthFormat));
-                        console.log("next");
                     }
                     if (this.props.onNextMonth && givenDay.format(_yearMonthFormat) > _month.format(_yearMonthFormat)) {
                         this.props.onNextMonth(this.state.month.clone().add(1, monthFormat));
-                        console.log("prev");
                     }
                     this.setState({ month: givenDay });
                 }
@@ -7639,7 +7641,6 @@ var Calendar = function (_Component) {
                 this.setState({
                     hoveredDay: (0, _momentJalaali2.default)(firstDay)
                 });
-                console.log("firstDay", firstDay);
             }
         }
     }, {
@@ -7750,11 +7751,10 @@ var Calendar = function (_Component) {
         key: 'onMouseLeave',
         value: function onMouseLeave() {
             if (this.state.isRange) {
-                if (this.state.selectedDayArray.length === 1 && !this.state.firstCal) {
-                    this.setState({
-                        hoveredDay: null
-                    });
-                }
+                this.setState({
+                    hoveredDay: null
+                });
+
                 if (this.props.onMouseEnterProp) {
                     this.props.onMouseEnterProp(false);
                 }
