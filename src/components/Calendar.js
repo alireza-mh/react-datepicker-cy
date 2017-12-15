@@ -66,29 +66,29 @@ export class Calendar extends Component {
         };
     }
 
-    componentWillReceiveProps({selectedDayObj,selectedDayArray , defaultMonth, min , secondHover}) {
-       if(this.state.isRange === false) {
-           if (this.props.selectedDayObj !== selectedDayObj) {
-               this.selectDay(selectedDayObj);
-           } else if (defaultMonth && this.props.defaultMonth !== defaultMonth && this.state.month === this.props.defaultMonth) {
-               this.setMonth(defaultMonth);
-           } else if (min && this.props.min !== min && this.state.month.isSame(this.props.min)) {
-               this.setMonth(min.clone());
-           }
-       }
-       else{
-           if (this.props.secondHover !== secondHover) {
-               this.setState({secondHover: secondHover});
-               this.handleHoverOnSecond(secondHover);
-           }
-           if (this.props.selectedDayArray !== selectedDayArray) {
-               this.setState({selectedDayArray: selectedDayArray});
-           } if (defaultMonth && this.props.defaultMonth !== defaultMonth && this.state.month === this.props.defaultMonth) {
-               this.setMonth(defaultMonth);
-           } else if (min && this.props.min !== min && this.state.month.isSame(this.props.min)) {
-               this.setMonth(min.clone());
-           }
-       }
+    componentWillReceiveProps({selectedDayObj,selectedDayArray , defaultMonth, min , secondHover }) {
+        if(this.state.isRange === false) {
+            if (this.props.selectedDayObj !== selectedDayObj) {
+                this.selectDay(selectedDayObj);
+            } else if (defaultMonth && this.props.defaultMonth !== defaultMonth && this.state.month === this.props.defaultMonth) {
+                this.setMonth(defaultMonth);
+            } else if (min && this.props.min !== min && this.state.month.isSame(this.props.min)) {
+                this.setMonth(min.clone());
+            }
+        }
+        else{
+            if (this.props.secondHover !== secondHover) {
+                this.setState({secondHover: secondHover});
+                this.handleHoverOnSecond(secondHover);
+            }
+            if (this.props.selectedDayArray !== selectedDayArray) {
+                this.setState({selectedDayArray: selectedDayArray});
+            } if (defaultMonth && this.props.defaultMonth !== defaultMonth && this.state.month === this.props.defaultMonth) {
+                this.setMonth(defaultMonth);
+            } else if (min && this.props.min !== min && this.state.month.isSame(this.props.min)) {
+                this.setMonth(min.clone());
+            }
+        }
     }
 
     setMode(mode) {
@@ -142,8 +142,11 @@ export class Calendar extends Component {
                 hover = true;
             }
         }
-            if (selectedDay.length === 1 && !this.state.firstCal && !this.state.secondHover) {
-                    hover = false;
+        if (selectedDay.length === 1 && hoveredDay === null) {
+            hover= false;
+        }
+        if (selectedDay.length === 1 && !this.state.firstCal && !this.state.secondHover) {
+            hover = false;
         } else if (selectedDay.length === 2) {
             if (selectedDay[1].isSameOrAfter(selectedDay[0]) && day.isBetween(selectedDay[0], selectedDay[1], null, '()')) {
                 hover = true;
@@ -186,14 +189,12 @@ export class Calendar extends Component {
                 if (selectedDayArray.length === 2) {
                     if (givenDay.isAfter(selectedDayArray[0])){
                         let temp = this.state.selectedDayArray;
-                        console.log("select day array" , selectedDayArray);
                         temp[1]= givenDay;
                         this.setState({selectedDayArray: temp});
                         syncSelectedDay({selectedDayArray: temp});
                         return
                     }
                     else {
-                        console.log("here");
                         this.setState({selectedDayArray: [givenDay]});
                         syncSelectedDay({selectedDayArray: [givenDay]});
                         return;
@@ -213,11 +214,9 @@ export class Calendar extends Component {
                 const monthFormat = isGregorian ? 'Month' : 'jMonth';
                 if (this.props.onPrevMonth && (givenDay.format(yearMonthFormat) <  month.format(yearMonthFormat) )) {
                     this.props.onPrevMonth(this.state.month.clone().subtract(1, monthFormat));
-                    console.log("next");
                 }
                 if (this.props.onNextMonth && (givenDay.format(yearMonthFormat) >  month.format(yearMonthFormat)) ) {
                     this.props.onNextMonth(this.state.month.clone().add(1, monthFormat));
-                    console.log("prev");
                 }
                 this.setState({month: givenDay});
             }
@@ -233,7 +232,6 @@ export class Calendar extends Component {
             this.setState({
                 hoveredDay: moment(firstDay)
             });
-            console.log("firstDay" ,firstDay );
         }
     }
     handleClickOnDayArray = selectedDayArray => {
@@ -340,11 +338,10 @@ export class Calendar extends Component {
     }
     onMouseLeave() {
         if(this.state.isRange) {
-            if (this.state.selectedDayArray.length === 1 && !this.state.firstCal) {
-                this.setState({
-                    hoveredDay: null
-                })
-            }
+            this.setState({
+                hoveredDay: null
+            })
+
             if(this.props.onMouseEnterProp){
                 this.props.onMouseEnterProp(false);
             }
