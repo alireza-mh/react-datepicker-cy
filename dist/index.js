@@ -20847,7 +20847,7 @@ var Day = function (_Component) {
           }, rest, {
             onClick: this.handleClick.bind(this),
             onMouseOver: this.handleMouseOverOnDay.bind(this),
-            style: hovered ? { backgroundColor: "#eeeeff" } : {}
+            className: hovered ? "cal-day-hover" : {}
           }),
           isGregorian ? day.format('D') : (0, _persian.persianNumber)(day.format('jD'))
         )

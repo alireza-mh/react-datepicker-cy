@@ -68,7 +68,7 @@ export default class Day extends Component {
           {...rest}
           onClick={this.handleClick.bind(this) }
           onMouseOver={this.handleMouseOverOnDay.bind(this) }
-          style={hovered ? {backgroundColor: "#eeeeff"} : {}}
+          className={hovered ? "cal-day-hover" : ""}
         >
           { isGregorian?day.format('D'):persianNumber(day.format('jD')) }
         </button>
