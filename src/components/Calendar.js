@@ -26,6 +26,7 @@ export class Calendar extends Component {
         isRange: PropTypes.bool,
         firstCal: PropTypes.bool,
         secondHover: PropTypes.bool,
+        thirdSelectReset: PropTypes.bool,
         onMouseEnterProp: PropTypes.func,
     };
 
@@ -42,6 +43,7 @@ export class Calendar extends Component {
         containerProps: {},
         selectedDayArray: [],
         isGregorian: true,
+        thirdSelectReset: true,
     };
 
     state = {
@@ -66,8 +68,8 @@ export class Calendar extends Component {
         };
     }
 
-    componentWillReceiveProps({selectedDayObj,selectedDayArray , defaultMonth, min , secondHover }) {
-        if(this.state.isRange === false) {
+    componentWillReceiveProps({selectedDayObj, selectedDayArray, defaultMonth, min, secondHover}) {
+        if (this.state.isRange === false) {
             if (this.props.selectedDayObj !== selectedDayObj) {
                 this.selectDay(selectedDayObj);
             } else if (defaultMonth && this.props.defaultMonth !== defaultMonth && this.state.month === this.props.defaultMonth) {
@@ -76,7 +78,7 @@ export class Calendar extends Component {
                 this.setMonth(min.clone());
             }
         }
-        else{
+        else {
             if (this.props.secondHover !== secondHover) {
                 this.setState({secondHover: secondHover});
                 this.handleHoverOnSecond(secondHover);
@@ -135,6 +137,7 @@ export class Calendar extends Component {
 
         return false
     }
+
     hover(selectedDay, hoveredDay, day, selected) {
         let hover = false;
         if (selectedDay.length === 1 && !!hoveredDay) {
@@ -143,7 +146,7 @@ export class Calendar extends Component {
             }
         }
         if (selectedDay.length === 1 && hoveredDay === null) {
-            hover= false;
+            hover = false;
         }
         if (selectedDay.length === 1 && !this.state.firstCal && !this.state.secondHover) {
             hover = false;
@@ -160,6 +163,7 @@ export class Calendar extends Component {
 
         return hover;
     }
+
     selectDay(givenDay) {
         if (this.state.isRange === false) {
             const {month, isGregorian} = this.state;
@@ -172,7 +176,7 @@ export class Calendar extends Component {
 
             this.setState({selectedDayObj: givenDay});
         }
-        else{
+        else {
             const {month, isGregorian, selectedDayArray} = this.state;
             const {syncSelectedDay} = this.props;
             const yearMonthFormat = isGregorian ? 'YYYYMM' : 'jYYYYjMM';
@@ -187,9 +191,9 @@ export class Calendar extends Component {
                 syncSelectedDay({selectedDayArray: days});
             } else {
                 if (selectedDayArray.length === 2) {
-                    if (givenDay.isAfter(selectedDayArray[0])){
+                    if (givenDay.isAfter(selectedDayArray[0]) && !this.props.thirdSelectReset) {
                         let temp = this.state.selectedDayArray;
-                        temp[1]= givenDay;
+                        temp[1] = givenDay;
                         this.setState({selectedDayArray: temp});
                         syncSelectedDay({selectedDayArray: temp});
                         return
@@ -212,10 +216,10 @@ export class Calendar extends Component {
             if (givenDay.format(yearMonthFormat) !== month.format(yearMonthFormat)) {
                 const {isGregorian} = this.state;
                 const monthFormat = isGregorian ? 'Month' : 'jMonth';
-                if (this.props.onPrevMonth && (givenDay.format(yearMonthFormat) <  month.format(yearMonthFormat) )) {
+                if (this.props.onPrevMonth && (givenDay.format(yearMonthFormat) < month.format(yearMonthFormat))) {
                     this.props.onPrevMonth(this.state.month.clone().subtract(1, monthFormat));
                 }
-                if (this.props.onNextMonth && (givenDay.format(yearMonthFormat) >  month.format(yearMonthFormat)) ) {
+                if (this.props.onNextMonth && (givenDay.format(yearMonthFormat) > month.format(yearMonthFormat))) {
                     this.props.onNextMonth(this.state.month.clone().add(1, monthFormat));
                 }
                 this.setState({month: givenDay});
@@ -223,17 +227,18 @@ export class Calendar extends Component {
         }
     }
 
-    handleHoverOnSecond(secondHover){
+    handleHoverOnSecond(secondHover) {
         if (this.state.selectedDayArray.length === 1 && secondHover) {
             let month = moment(this.state.selectedDayArray.length[0]).month();
             let day = moment(this.state.selectedDayArray.length[0]).day();
             let year = moment(this.state.selectedDayArray.length[0]).year();
-            var firstDay = new Date(year, month + 1 , 0);
+            var firstDay = new Date(year, month + 1, 0);
             this.setState({
                 hoveredDay: moment(firstDay)
             });
         }
     }
+
     handleClickOnDayArray = selectedDayArray => {
         const {onSelect} = this.props;
         this.selectDay(selectedDayArray);
@@ -271,6 +276,7 @@ export class Calendar extends Component {
         const {styles} = this.props;
         return (<MonthSelector styles={styles} isGregorian={isGregorian} selectedMonth={month}/>);
     }
+
     selectedDay(selectedDay, day) {
         let selected = false;
         for (let i = 0; i < selectedDay.length; i++) {
@@ -284,7 +290,7 @@ export class Calendar extends Component {
     }
 
     renderDays() {
-        const {month, selectedDayObj, isGregorian , hoveredDay ,selectedDayArray} = this.state;
+        const {month, selectedDayObj, isGregorian, hoveredDay, selectedDayArray} = this.state;
         const {children, min, max, styles, outsideClickIgnoreClass} = this.props;
 
         let days;
@@ -314,7 +320,7 @@ export class Calendar extends Component {
                         days.map(day => {
                             const isCurrentMonth = day.format(monthFormat) === month.format(monthFormat);
                             const disabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
-                            const selected = (this.state.isRange === false) ? (selectedDayObj ?  selectedDayObj.isSame(day, 'day') : false) : this.selectedDay(selectedDayArray, day);
+                            const selected = (this.state.isRange === false) ? (selectedDayObj ? selectedDayObj.isSame(day, 'day') : false) : this.selectedDay(selectedDayArray, day);
                             let hover = this.hover(selectedDayArray, hoveredDay, day, selected);
                             return (
                                 <Day
@@ -327,7 +333,7 @@ export class Calendar extends Component {
                                     selected={selected}
                                     isCurrentMonth={isCurrentMonth}
                                     styles={styles}
-                                    hovered={(this.state.isRange === false) ? false : hover }
+                                    hovered={(this.state.isRange === false) ? false : hover}
                                 />
                             );
                         })
@@ -336,24 +342,27 @@ export class Calendar extends Component {
             </div>
         );
     }
+
     onMouseLeave() {
-        if(this.state.isRange) {
+        if (this.state.isRange) {
             this.setState({
                 hoveredDay: null
             })
 
-            if(this.props.onMouseEnterProp){
+            if (this.props.onMouseEnterProp) {
                 this.props.onMouseEnterProp(false);
             }
         }
     }
+
     onMouseEnter() {
-        if(this.state.isRange) {
-            if(this.props.onMouseEnterProp){
+        if (this.state.isRange) {
+            if (this.props.onMouseEnterProp) {
                 this.props.onMouseEnterProp(true);
             }
         }
     }
+
     render() {
         const {
             selectedDayObj,

@@ -7595,7 +7595,7 @@ var Calendar = function (_Component) {
                     syncSelectedDay({ selectedDayArray: days });
                 } else {
                     if (selectedDayArray.length === 2) {
-                        if (givenDay.isAfter(selectedDayArray[0])) {
+                        if (givenDay.isAfter(selectedDayArray[0]) && !this.props.thirdSelectReset) {
                             var temp = this.state.selectedDayArray;
                             temp[1] = givenDay;
                             this.setState({ selectedDayArray: temp });
@@ -7815,6 +7815,7 @@ Calendar.propTypes = {
     isRange: _react.PropTypes.bool,
     firstCal: _react.PropTypes.bool,
     secondHover: _react.PropTypes.bool,
+    thirdSelectReset: _react.PropTypes.bool,
     onMouseEnterProp: _react.PropTypes.func
 };
 Calendar.childContextTypes = {
@@ -7828,7 +7829,8 @@ Calendar.defaultProps = {
     styles: _DefaultStyles.defaultStyles,
     containerProps: {},
     selectedDayArray: [],
-    isGregorian: true
+    isGregorian: true,
+    thirdSelectReset: true
 };
 exports.default = (0, _reactOnclickoutside2.default)(Calendar);
 
@@ -20847,7 +20849,7 @@ var Day = function (_Component) {
           }, rest, {
             onClick: this.handleClick.bind(this),
             onMouseOver: this.handleMouseOverOnDay.bind(this),
-            className: hovered ? "cal-day-hover" : {}
+            className: hovered ? "cal-day-hover" : ""
           }),
           isGregorian ? day.format('D') : (0, _persian.persianNumber)(day.format('jD'))
         )
