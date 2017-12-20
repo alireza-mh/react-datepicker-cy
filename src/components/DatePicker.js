@@ -212,7 +212,7 @@ export default class DatePicker extends Component {
         <Calendar
           min={min}
           max={max}
-          selectedDay={momentValue}
+          selectedDayObj={momentValue}
           defaultMonth={defaultMonth}
           onSelect={this.handleSelectDay.bind(this)}
           onClickOutside={this.handleClickOutsideCalendar.bind(this)}
