@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["react", "react-dom"], factory);
 	else if(typeof exports === 'object')
-		exports["react-datepicker2"] = factory(require("react"), require("react-dom"));
+		exports["react-datepicker-cy"] = factory(require("react"), require("react-dom"));
 	else
-		root["react-datepicker2"] = factory(root["React"], root["ReactDOM"]);
+		root["react-datepicker-cy"] = factory(root["React"], root["ReactDOM"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_9__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache

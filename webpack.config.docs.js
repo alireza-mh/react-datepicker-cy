@@ -6,7 +6,7 @@ module.exports = {
     path: path.resolve(__dirname, 'docs'),
     libraryTarget: 'umd',
     filename: 'demo_bundles.js',
-    library: 'react-datepicker2'
+    library: 'react-datepicker-cy'
   },
   module: {
     loaders: [

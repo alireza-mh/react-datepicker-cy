@@ -7,7 +7,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
     filename: 'index.js',
-    library: 'react-datepicker2'
+    library: 'react-datepicker-cy'
   },
 
   externals: {
