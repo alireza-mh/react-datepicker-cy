@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import DaysViewHeading from './DaysViewHeading';
 import DaysOfWeek from './DaysOfWeek';
 import MonthSelector from './MonthSelector';
@@ -7,6 +7,7 @@ import {getDaysOfMonth} from '../utils/moment-helper';
 import moment from 'moment-jalaali';
 import onClickOutside from 'react-onclickoutside';
 import {defaultStyles} from './DefaultStyles';
+import PropTypes from 'prop-types';
 
 export class Calendar extends Component {
     static propTypes = {
@@ -232,7 +233,9 @@ export class Calendar extends Component {
             let month = moment(this.state.selectedDayArray.length[0]).month();
             let day = moment(this.state.selectedDayArray.length[0]).day();
             let year = moment(this.state.selectedDayArray.length[0]).year();
-            var firstDay = new Date(year, month + 1, 0);
+
+            // Really big time help to hover over all remain date of first column
+            var firstDay = new Date(2100, month + 1, 0);
             this.setState({
                 hoveredDay: moment(firstDay)
             });

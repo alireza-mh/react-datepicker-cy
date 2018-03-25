@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { persianNumber } from '../utils/persian';
 import { leftArrow, rightArrow } from '../utils/assets';
+import PropTypes from 'prop-types';
 
 export default class MonthsViewHeading extends Component {
   static propTypes = {

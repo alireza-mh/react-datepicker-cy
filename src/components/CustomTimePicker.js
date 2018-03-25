@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import moment from 'moment-jalaali';
 import TimePicker from './TimePicker';
 import { outsideClickIgnoreClass } from './DatePicker';
 import { persianNumber } from '../utils/persian';
+import PropTypes from 'prop-types';
 
 const disabledMinutes = () => {
   return [...Array(60)].map((v, i) => i).filter(v => v % 5 !== 0);

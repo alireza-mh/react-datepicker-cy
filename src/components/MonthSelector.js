@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import moment from 'moment-jalaali';
 import classnames from 'classnames';
 import MonthsViewHeading from './MonthsViewHeading';
 import { persianNumber } from '../utils/persian';
 import { leftArrow, rightArrow } from '../utils/assets';
+import PropTypes from 'prop-types';
 
 // List of months
 const monthsJalaali = [

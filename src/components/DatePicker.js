@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import moment from 'moment-jalaali';
 import TetherComponent from 'react-tether';
 import Calendar from './Calendar';
 import classnames from 'classnames';
 import MyTimePicker from './CustomTimePicker'
+import PropTypes from 'prop-types';
 
 export const outsideClickIgnoreClass = 'ignore--click--outside'
 moment.loadPersian();

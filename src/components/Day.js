@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import { persianNumber } from '../utils/persian';
+import PropTypes from 'prop-types';
 
 const styles = {
   wrapper: {},
