@@ -24,7 +24,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "start": "webpack --config webpack.config.docs.js && webpack-dev-server --config webpack.config.dev.js",
+    "start": "webpack --config webpack.config.docs.js && webpack-dev-server --config webpack.config.dev.js --port 4000",
     "build": "webpack --config webpack.config.prod.js"
   },
   "dependencies": {

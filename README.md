@@ -106,7 +106,7 @@ The most basic use of the DatePicker can be described with:
 
 ## Local Development
 
-The `master` branch contains the latest version of the Datepicker component. To start your example app, you can run `npm install` then `npm start`. This starts a simple webserver on http://localhost:8080.
+The `master` branch contains the latest version of the Datepicker component. To start your example app, you can run `npm install` then `npm start`. This starts a simple webserver on http://localhost:4000.
 
 ## Todo
 
