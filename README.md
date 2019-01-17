@@ -83,7 +83,7 @@ selectedDayArray will get array of days
 
 tetherAttachment: specify position of Datepicker thether. example:  
 ```js
-tetherAttachment={"top right"}
+tetherAttachment="top right"
 ```
 - onOpen : pass out if datepicker popup is open or not.
 
