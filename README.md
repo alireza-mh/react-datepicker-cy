@@ -1,8 +1,7 @@
 # React Date Picker Clickyab
 
-A simple and reusable Datepicker component for React (with persian jalali calendar support) [Demo](https://alireza-mh.github.io/react-datepicker2/).
+A simple and reusable Datepicker component for React (with persian jalali calendar support).
 
-![](https://alireza-mh.github.io/react-datepicker-cy/images/react-datepicker-cy.gif)
 
 This package uses [react-persian-datepicker](https://github.com/evandhq/react-persian-datepicker) project under the hood.
 
